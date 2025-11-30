@@ -4,20 +4,21 @@ let board = ['', '', '', '', '', '', '', '', '']; //arrray for the 9 squares
 let currentPlayer = 'X'; //current player
 let gameOver = false; //game over flag
 
-let scoreX = Number(localStorage.getItem('scoreboard-x')); 
-let scoreO = Number(localStorage.getItem('scoreboard-o'));
+let scoreX = Number(localStorage.getItem('scoreX'));  
+let scoreO = Number(localStorage.getItem('scoreO'));
 //retrieve score for X & O from local storage and converts the stored string into a number
 
 const squares = document.querySelectorAll('.game-square'); //select all squares
 const turnDisplay = document.getElementById('turn'); //display for current turn
-const btnPlayAgain = document.getElementById('btn-play-again'); //play again button
+const btnPlayAgain = document.getElementById('button-play-again'); //play again button
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Function to handle a square being clicked
 function handleSquareClick(index) {
     if (board[index] !== '') return; //if square is already filled, do nothing
-    
+    if (gameOver) return; //if game is over, do nothing
+
     board[index] = currentPlayer; //update for move
     squares[index].innerText = currentPlayer; //update square display
 
@@ -55,9 +56,13 @@ function checkTie() {
 
 //function to handle a win and tie
 function handleWin(player) { //player is 'X' or 'O'
+    gameOver = true; //set game over flag
+
+
     if (player === 'X') {//if X wins
         scoreX++; //increment score for X
         localStorage.setItem('scoreX', scoreX); //store updated score for X
+
     } else { //if O wins
         scoreO++; //increment score for O
         localStorage.setItem('scoreO', scoreO); //store updated score for O
@@ -66,26 +71,35 @@ function handleWin(player) { //player is 'X' or 'O'
     updateScore(); //update score display
     alert(`Player ${player} wins!`); //alert winner
 }
+//////////////////////////////////////////////////////////////////////////////////////
+
+//function to handle a tie
+function handleTie() { 
+    gameOver = true; //set game over flag
+    alert("It's a tie!"); //alert tie
+}
+/////////////////////////////////////////////////////////////////////////////////////
 
 //function to reset the board
 function resetBoard() {
     board = ['', '', '', '', '', '', '', '', '']; //reset board
     currentPlayer = 'X'; //reset current player
+    
     squares.forEach(square => square.innerText = ''); //clear square display
     updateTurnDisplay(); //update turn display
 }
 /////////////////////////////////////////////////////////////////////////////////////
 //event listeners for squares and scoreboard response
 function initSquares() {
-    squares.forEach((square, index) => {
-        square.addEventListener('click', () => handleSquareClick(index));
+    squares.forEach((square, index) => {  // for each square
+        square.addEventListener('click', () => handleSquareClick(index));  //add click event listener to each square
     });
 }
 /////////////////////////////////////////////////////////////////////////////////////
 //update score display
 function updateScore() {
-    document.getElementById('scoreX').innerText = scoreX;
-    document.getElementById('scoreO').innerText = scoreO;
+    document.getElementById('scoreboard-x').innerText = scoreX;
+    document.getElementById('scoreboard-o').innerText = scoreO;
 }
 /////////////////////////////////////////////////////////////////////////////////////
 //update turn display
@@ -93,6 +107,8 @@ function updateTurnDisplay() {
     turnDisplay.innerText = `Player ${currentPlayer}'s turn`;
 }
 /////////////////////////////////////////////////////////////////////////////////////
+btnPlayAgain.addEventListener('click', resetBoard); //event listener for play again button
+
 //initialize game
 initSquares();
 updateScore();
