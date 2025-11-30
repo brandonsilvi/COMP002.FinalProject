@@ -84,6 +84,7 @@ function handleTie() {
 function resetBoard() {
     board = ['', '', '', '', '', '', '', '', '']; //reset board
     currentPlayer = 'X'; //reset current player
+    gameOver = false; //reset game over flag    
     
     squares.forEach(square => square.innerText = ''); //clear square display
     updateTurnDisplay(); //update turn display
