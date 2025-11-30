@@ -88,6 +88,7 @@ function resetBoard() {
     
     squares.forEach(square => square.innerText = ''); //clear square display
     updateTurnDisplay(); //update turn display
+    updateScore(); //update score display
 }
 /////////////////////////////////////////////////////////////////////////////////////
 //event listeners for squares and scoreboard response
