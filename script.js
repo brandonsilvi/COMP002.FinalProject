@@ -1,3 +1,6 @@
+localStorage.removeItem('scoreX');
+localStorage.removeItem('scoreO');
+//////////////////////////////////////////////////////////////////////////////////////////////////////////  
 //State variables
 
 let board = ['', '', '', '', '', '', '', '', '']; //arrray for the 9 squares
