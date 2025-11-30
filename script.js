@@ -14,6 +14,26 @@ const btnPlayAgain = document.getElementById('btnPlayAgain'); //play again butto
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//Function to handle a square being clicked
+function handleSquareClick(index) {
+    if (board[index] !== null) return; //if square is already filled, do nothing
+    
+    board[index] = currentPlayer; //update for move
+
+    if (checkWin()) {
+        handleWin(currentPlayer);
+        return;
+    } //check for win
+
+    if (checkTie()) {
+        handleTie();
+        return;
+    } //check for tie
+
+    currentPlayer = currentPlayer === 'X' ? 'O' : 'X'; //switch player
+    updateTurnDisplay(); //update turn display
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
