@@ -4,13 +4,13 @@ let board = ['', '', '', '', '', '', '', '', '']; //arrray for the 9 squares
 let currentPlayer = 'X'; //current player
 let gameOver = false; //game over flag
 
-let scoreX = Number(localStorage.getItem('scoreX')); 
-let scoreO = Number(localStorage.getItem('scoreO'));
+let scoreX = Number(localStorage.getItem('scoreboard-x')); 
+let scoreO = Number(localStorage.getItem('scoreboard-o'));
 //retrieve score for X & O from local storage and converts the stored string into a number
 
-const squares = document.querySelectorAll('.square'); //select all squares
-const turnDisplay = document.getElementById('turnDisplay'); //display for current turn
-const btnPlayAgain = document.getElementById('btnPlayAgain'); //play again button
+const squares = document.querySelectorAll('.game-square'); //select all squares
+const turnDisplay = document.getElementById('turn'); //display for current turn
+const btnPlayAgain = document.getElementById('btn-play-again'); //play again button
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -19,6 +19,7 @@ function handleSquareClick(index) {
     if (board[index] !== '') return; //if square is already filled, do nothing
     
     board[index] = currentPlayer; //update for move
+    squares[index].innerText = currentPlayer; //update square display
 
     if (checkWin()) {
         handleWin(currentPlayer);
@@ -81,18 +82,18 @@ function initSquares() {
     });
 }
 /////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
+//update score display
 function updateScore() {
     document.getElementById('scoreX').innerText = scoreX;
     document.getElementById('scoreO').innerText = scoreO;
 }
-
+/////////////////////////////////////////////////////////////////////////////////////
+//update turn display
+function updateTurnDisplay() {
+    turnDisplay.innerText = `Player ${currentPlayer}'s turn`;
+}
+/////////////////////////////////////////////////////////////////////////////////////
+//initialize game
+initSquares();
+updateScore();
+updateTurnDisplay();
