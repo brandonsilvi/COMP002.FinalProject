@@ -16,7 +16,7 @@ const btnPlayAgain = document.getElementById('btnPlayAgain'); //play again butto
 
 //Function to handle a square being clicked
 function handleSquareClick(index) {
-    if (board[index] !== null) return; //if square is already filled, do nothing
+    if (board[index] !== '') return; //if square is already filled, do nothing
     
     board[index] = currentPlayer; //update for move
 
@@ -49,7 +49,7 @@ function checkWin() {
 
 //check for a tie
 function checkTie() {
-    return board.every(square => square !== null); //if all squares are filled
+    return board.every(square => square !== ''); //if all squares are filled
 }
 
 //function to handle a win and tie
@@ -74,7 +74,13 @@ function resetBoard() {
     updateTurnDisplay(); //update turn display
 }
 /////////////////////////////////////////////////////////////////////////////////////
-
+//event listeners for squares and scoreboard response
+function initSquares() {
+    squares.forEach((square, index) => {
+        square.addEventListener('click', () => handleSquareClick(index));
+    });
+}
+/////////////////////////////////////////////////////////////////////////////////////
 
 
 
