@@ -1,5 +1,5 @@
 localStorage.removeItem('scoreX');
-localStorage.removeItem('scoreO');
+localStorage.removeItem('scoreO'); //score reset on page refresh.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////  
 //State variables
 
@@ -14,6 +14,7 @@ let scoreO = Number(localStorage.getItem('scoreO')) || 0;
 const squares = document.querySelectorAll('.game-square'); //select all squares
 const turnDisplay = document.getElementById('turn'); //display for current turn
 const btnPlayAgain = document.getElementById('button-play-again'); //play again button
+const messageDiv = document.getElementById('message'); //message display for win/tie
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -21,7 +22,6 @@ const btnPlayAgain = document.getElementById('button-play-again'); //play again 
 function handleSquareClick(index) {
     if (board[index] !== '') return; //if square is already filled, do nothing
     if (gameOver) return; //if game is over, do nothing
-
     board[index] = currentPlayer; //update for move
     squares[index].innerText = currentPlayer; //update square display
 
@@ -72,14 +72,35 @@ function handleWin(player) { //player is 'X' or 'O'
     }
 
     updateScore(); //update score display
-    alert(`Player ${player} wins!`); //alert winner
+    messageDiv.innerText = `Player ${player} wins!`; //display winner message
+    messageDiv.style.color = player === 'X' ? '#002f64ff' : '#dd003b'; //color based on player
+    messageDiv.style.transform = 'scale(1.2)'; //animate message
+
+    highlightWinningSquares(player); //highlight winning squares
 }
 //////////////////////////////////////////////////////////////////////////////////////
 
 //function to handle a tie
 function handleTie() { 
     gameOver = true; //set game over flag
-    alert("It's a tie!"); //alert tie
+    messageDiv.innerText = "It's a tie!"; //display tie message
+    messageDiv.style.color = '#555555'; //neutral color for tie
+    messageDiv.style.transform = 'scale(1.2)'; //animate message
+}
+/////////////////////////////////////////////////////////////////////////////////////
+//function to highlight winning squares
+function highlightWinningSquares(player) {
+    const winConditions = [ 
+    [0, 1, 2],[3, 4, 5],[6, 7, 8], //rows
+    [0, 3, 6],[1, 4, 7],[2, 5, 8], //columns
+    [0, 4, 8],[2, 4, 6]             //diagonals
+    ];
+
+    winConditions.forEach(([a, b, c]) => {
+        if (board[a] === player && board[b] === player && board[c] === player) {
+            [a, b, c].forEach(i => squares[i].classList.add('winner')); //add highlight class to winning squares
+        }
+    });
 }
 /////////////////////////////////////////////////////////////////////////////////////
 
@@ -89,9 +110,14 @@ function resetBoard() {
     currentPlayer = 'X'; //reset current player
     gameOver = false; //reset game over flag    
     
-    squares.forEach(square => square.innerText = ''); //clear square display
+    squares.forEach(square => {
+        square.innerText = ''; //clear square display
+        square.classList.remove('x', 'o', 'winner'); //remove highlight class
+    });
     updateTurnDisplay(); //update turn display
     updateScore(); //update score display
+    messageDiv.innerText = ''; //clear message display
+    messageDiv.style.transform = 'scale(1)'; //reset message animation
 }
 /////////////////////////////////////////////////////////////////////////////////////
 //event listeners for squares and scoreboard response
@@ -118,3 +144,4 @@ btnPlayAgain.addEventListener('click', resetBoard); //event listener for play ag
 initSquares();
 updateScore();
 updateTurnDisplay();
+//////////////////////////////////////////////////////////////////////////////////////////////////////////

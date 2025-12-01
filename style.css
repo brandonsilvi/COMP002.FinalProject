@@ -8,30 +8,47 @@ body {
 	font-size: 18px;
 	padding: .5em 2em;
 	text-align: center;
+	color: #2d2d2d;
+	background-color: #c3d3ec;
 }
 
 h1 {
 	font-size: 3em;
+	font-weight: bold;
+	color: #4a90e2;
 }
 
 h2 {
 	font-size: 2.25em;
+	font-weight: 600;
+	margin-bottom: 0.25em;
+	color: #4a90e2;
 }
 
 #button-play-again {
-	margin: 0 auto;
+	padding: 0.5em 1em;
+	font-size: 1.25em;
+	background-color: #194577;
+	color: white;
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+	margin-top: 1em;
 }
 
 #container {
 	margin: 2em auto;
 	width: 100%;
+	max-width: 600px;
 }
 
 #game-board {
 	display: grid;
 	grid-template-columns: repeat(3, 150px);
 	margin: 0 auto;
-	width: 450px
+	width: 450px;
+	border: 2px solid rgba(0, 0, 0, 0);
+	border-radius: 10px;
 }
 
 #play-again {
@@ -40,24 +57,35 @@ h2 {
 
 #square-0, #square-1, #square-3, #square-4 {
 	border-width: 0 2px 2px 0;
+	cursor: pointer;
 }
 
 #square-2, #square-5 {
 	border-width: 0 0 2px 0;
+	cursor: pointer;
 }
 
 #square-6, #square-7 {
 	border-width: 0 2px 0 0;
+	cursor: pointer;
 }
 
 #square-8 {
 	border-width: 0;
+	cursor: pointer;
 }
 
-#turn {}
+#turn {
+	font-size: 2em;
+	font-weight: bold;
+	color: #dd003b;
+	border: #dd003b 2px solid;
+	padding: 0.1em 0.5em;
+	border-radius: 10px;
+}
 
 .game-square {
-	border-color: lightgrey;
+	border-color: rgb(0, 0, 0);
 	border-style: solid;
 	display: inline;
 	font-size: 6em;
@@ -65,4 +93,56 @@ h2 {
 	padding: 20px 40px;
 	height: 150px;
 	width: 150px;
+}
+ 
+#scoreboard {
+	margin-top: 2em;
+	font-size: 1.5em;
+	color: #4a90e2;
+	justify-content: center;
+	display: flex;
+	gap: 2em;
+	padding: 1em 2em;
+	border-radius: 15px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+#scoreboard div {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#scoreboard span {
+	font-size: 1.5em;
+	font-weight: bold;
+	color: #dd003b;
+	
+}
+
+.game-square:hover {
+	background-color: #e1eaf7;
+}
+
+#message {
+	margin-top: 1em;
+	font-size: 1.5em;
+	font-weight: bold;
+	color: #dd003b;
+	padding: 0.5em 1em;
+	border-radius: 10px;
+	background-color: #fff5f5;
+	display: inline-block;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+	transition: transform 0.2s ease, opacity 0.2s ease;
+}
+ 
+.winner {
+	background-color: #bebe00;
+	color: white;
+	transition: background-color 0.3s ease;
+}
+footer {
+	margin-top: 2em;
+	font-size: 0.9em;
+	color: #666666;
 }
